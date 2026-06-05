@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Screenshot Generator Pro</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Space+Grotesk:wght@400;500;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+  <!-- html2canvas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <link rel="stylesheet" href="x.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Sidebar Controls -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand">
+          <span class="logo-icon">⚡</span>
+          <div>
+            <h1>Screenshot Pro</h1>
+            <span class="version">v2.0 Beta</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Navigation -->
+      <nav class="tab-nav">
+        <button class="tab-btn active" data-tab="presets">🎯 Presets</button>
+        <button class="tab-btn" data-tab="content">✍️ Content</button>
+        <button class="tab-btn" data-tab="device">📱 Device</button>
+        <button class="tab-btn" data-tab="background">🎨 Canvas</button>
+        <button class="tab-btn" data-tab="typography">🔤 Font</button>
+      </nav>
+
+      <!-- Tab Panels -->
+      <div class="tab-content">
+        
+        <!-- Tab: Presets -->
+        <div class="tab-pane active" id="pane-presets">
+          <p class="tab-description">Choose a curated preset template to get started instantly.</p>
+          <div class="presets-grid">
+            <button class="preset-card" data-preset="solar-flare">
+              <span class="preset-preview preset-solar"></span>
+              <span class="preset-name">Solar Flare</span>
+            </button>
+            <button class="preset-card" data-preset="cyberpunk-glow">
+              <span class="preset-preview preset-cyber"></span>
+              <span class="preset-name">Cyberpunk Glow</span>
+            </button>
+            <button class="preset-card" data-preset="dark-tech">
+              <span class="preset-preview preset-dark"></span>
+              <span class="preset-name">Dark Tech</span>
+            </button>
+            <button class="preset-card" data-preset="minimal-glass">
+              <span class="preset-preview preset-glass"></span>
+              <span class="preset-name">Minimal Glass</span>
+            </button>
+            <button class="preset-card" data-preset="aurora-pastel">
+              <span class="preset-preview preset-aurora"></span>
+              <span class="preset-name">Aurora Pastel</span>
+            </button>
+            <button class="preset-card" data-preset="forest-clean">
+              <span class="preset-preview preset-forest"></span>
+              <span class="preset-name">Forest Clean</span>
+            </button>
+            <button class="preset-card" data-preset="sunset-vibes">
+              <span class="preset-preview preset-sunset"></span>
+              <span class="preset-name">Sunset Vibes</span>
+            </button>
+            <button class="preset-card" data-preset="neon-purple">
+              <span class="preset-preview preset-purple"></span>
+              <span class="preset-name">Neon Purple</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tab: Content -->
+        <div class="tab-pane" id="pane-content">
+          <div class="control-group">
+            <label for="titleInput">Header Title</label>
+            <textarea id="titleInput" rows="2">Get a UPI with credit card</textarea>
+          </div>
+          <div class="control-group">
+            <label for="subtitleInput">Subtitle Text</label>
+            <textarea id="subtitleInput" rows="2">Fast and secure payments</textarea>
+          </div>
+          <div class="control-group">
+            <label for="imageUpload" class="file-upload-label">
+              <span>Upload App Screenshot</span>
+              <span class="sub-label">Supports PNG, JPG (19.5:9 ratios work best)</span>
+            </label>
+            <input type="file" id="imageUpload" accept="image/*" class="file-input">
+          </div>
+          <div class="control-group">
+            <label for="bgUpload" class="file-upload-label">
+              <span>Custom Background Image</span>
+              <span class="sub-label">Optional image background overlay</span>
+            </label>
+            <input type="file" id="bgUpload" accept="image/*" class="file-input">
+          </div>
+        </div>
+
+        <!-- Tab: Device Mockup -->
+        <div class="tab-pane" id="pane-device">
+          <div class="control-group">
+            <label for="deviceFrame">Frame Style</label>
+            <select id="deviceFrame">
+              <option value="iphone15">iPhone 15 Pro (Titanium)</option>
+              <option value="android">Android Minimal</option>
+              <option value="outline">Clean Outline</option>
+              <option value="none">No Frame (Floating Screen)</option>
+            </select>
+          </div>
+          
+          <div class="control-row">
+            <div class="control-group half">
+              <label for="deviceColor">Frame Theme</label>
+              <select id="deviceColor">
+                <option value="titanium">Titanium</option>
+                <option value="dark">Midnight</option>
+                <option value="gold">Gold</option>
+                <option value="custom">Custom</option>
+              </select>
+            </div>
+            <div class="control-group half" id="deviceColorCustomContainer" style="display:none;">
+              <label for="deviceColorCustom">Custom Color</label>
+              <div class="color-picker-wrapper">
+                <input type="color" id="deviceColorCustom" value="#ff007f">
+              </div>
+            </div>
+          </div>
+
+          <div class="section-title">3D Transform & Layout</div>
+
+          <div class="control-group">
+            <div class="slider-header">
+              <label for="deviceTiltX">Tilt X (Perspective)</label>
+              <span class="slider-val" id="val-deviceTiltX">0°</span>
+            </div>
+            <input type="range" id="deviceTiltX" min="-30" max="30" value="0" step="1">
+          </div>
+
+          <div class="control-group">
+            <div class="slider-header">
+              <label for="deviceTiltY">Tilt Y (Rotate Side)</label>
+              <span class="slider-val" id="val-deviceTiltY">0°</span>
+            </div>
+            <input type="range" id="deviceTiltY" min="-30" max="30" value="0" step="1">
+          </div>
+
+          <div class="control-group">
+            <div class="slider-header">
+              <label for="deviceRotateZ">Rotate Z (Skew)</label>
+              <span class="slider-val" id="val-deviceRotateZ">0°</span>
+            </div>
+            <input type="range" id="deviceRotateZ" min="-45" max="45" value="0" step="1">
+          </div>
+
+          <div class="control-group">
+            <div class="slider-header">
+              <label for="deviceScale">Device Scale</label>
+              <span class="slider-val" id="val-deviceScale">1.0</span>
+            </div>
+            <input type="range" id="deviceScale" min="0.5" max="1.5" value="1.0" step="0.05">
+          </div>
+
+          <div class="control-group">
+            <div class="slider-header">
+              <label for="deviceOffsetY">Vertical Shift (Y)</label>
+              <span class="slider-val" id="val-deviceOffsetY">0px</span>
+            </div>
+            <input type="range" id="deviceOffsetY" min="-250" max="250" value="0" step="5">
+          </div>
+
+          <div class="section-title">Reflections & Shadows</div>
+
+          <div class="control-row">
+            <div class="control-group checkbox">
+              <input type="checkbox" id="deviceGlare" checked>
+              <label for="deviceGlare">Screen Glare Effect</label>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <div class="slider-header">
+              <label for="deviceShadowBlur">Shadow Blur Size</label>
+              <span class="slider-val" id="val-deviceShadowBlur">40px</span>
+            </div>
+            <input type="range" id="deviceShadowBlur" min="0" max="120" value="40">
+          </div>
+
+          <div class="control-group">
+            <label for="deviceShadowColor">Shadow Color & Opacity</label>
+            <div class="color-picker-row">
+              <input type="color" id="deviceShadowColor" value="#000000">
+              <input type="range" id="deviceShadowOpacity" min="0" max="100" value="25" class="opacity-slider">
+              <span class="slider-val" id="val-deviceShadowOpacity">25%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Background & Canvas -->
+        <div class="tab-pane" id="pane-background">
+          
+          <div class="control-group">
+            <label for="bgStyle">Background Mode</label>
+            <select id="bgStyle">
+              <option value="gradient-presets">Gradient Presets</option>
+              <option value="custom-gradient">Custom Gradient Builder</option>
+              <option value="solid">Solid Color</option>
+            </select>
+          </div>
+
+          <!-- Sub-pane: Preset Background Gradients -->
+          <div id="bg-sub-presets" class="control-group">
+            <label for="bgPreset">Gradient Presets</label>
+            <select id="bgPreset">
+              <option value="pink">Kiwi Pink Gradient</option>
+              <option value="green">Kiwi Green Gradient</option>
+              <option value="glass">Frosted Blur Space</option>
+              <option value="neon">Electric Neon Glow</option>
+              <option value="abstract">Abstract Retro</option>
+              <option value="sunrise">Tropical Sunrise</option>
+              <option value="ocean">Ocean Horizon</option>
+              <option value="forest">Enchanted Forest</option>
+            </select>
+          </div>
+
+          <!-- Sub-pane: Custom Gradient Inputs -->
+          <div id="bg-sub-custom" style="display:none;">
+            <div class="control-row">
+              <div class="control-group half">
+                <label for="bgColor1">Color 1</label>
+                <div class="color-picker-wrapper">
+                  <input type="color" id="bgColor1" value="#6a11cb">
+                </div>
+              </div>
+              <div class="control-group half">
+                <label for="bgColor2">Color 2</label>
+                <div class="color-picker-wrapper">
+                  <input type="color" id="bgColor2" value="#2575fc">
+                </div>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label for="bgGradientType">Gradient Type</label>
+              <select id="bgGradientType">
+                <option value="linear">Linear Gradient</option>
+                <option value="radial">Radial Gradient</option>
+              </select>
+            </div>
+
+            <div class="control-group" id="bgGradientAngleContainer">
+              <div class="slider-header">
+                <label for="bgGradientAngle">Gradient Angle</label>
+                <span class="slider-val" id="val-bgGradientAngle">135°</span>
+              </div>
+              <input type="range" id="bgGradientAngle" min="0" max="360" value="135">
+            </div>
+          </div>
+
+          <!-- Sub-pane: Solid Color -->
+          <div id="bg-sub-solid" style="display:none;" class="control-group">
+            <label for="bgColorSolid">Solid Color</label>
+            <div class="color-picker-wrapper">
+              <input type="color" id="bgColorSolid" value="#dfe4ea">
+            </div>
+          </div>
+
+          <div class="section-title">Patterns & Decors</div>
+
+          <div class="control-group">
+            <label for="bgPattern">Pattern Overlay</label>
+            <select id="bgPattern">
+              <option value="none">None</option>
+              <option value="dot-grid">Dot Grid</option>
+              <option value="mesh-grid">Mesh Grid</option>
+              <option value="subtle-noise">Subtle Noise</option>
+            </select>
+          </div>
+
+          <div class="control-row">
+            <div class="control-group checkbox">
+              <input type="checkbox" id="bgBlobs" checked>
+              <label for="bgBlobs">Decorative Floating Blobs</label>
+            </div>
+          </div>
+
+          <div class="control-group" id="bgBlurContainer">
+            <div class="slider-header">
+              <label for="bgBlur">Blob Backdrop Blur</label>
+              <span class="slider-val" id="val-bgBlur">20px</span>
+            </div>
+            <input type="range" id="bgBlur" min="0" max="80" value="20">
+          </div>
+        </div>
+
+        <!-- Tab: Typography -->
+        <div class="tab-pane" id="pane-typography">
+          
+          <div class="control-group">
+            <label for="textPosition">Text Layout Alignment</label>
+            <select id="textPosition">
+              <option value="top">Title at Top, Device at Bottom</option>
+              <option value="bottom">Device at Top, Title at Bottom</option>
+              <option value="hidden">Hide All Text (Device Only)</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="textAlign">Text Horizontal Alignment</label>
+            <select id="textAlign">
+              <option value="center">Center</option>
+              <option value="left">Left</option>
+              <option value="right">Right</option>
+            </select>
+          </div>
+
+          <div class="section-title">Title Formatting</div>
+
+          <div class="control-group">
+            <label for="titleFont">Title Font Family</label>
+            <select id="titleFont">
+              <option value="Outfit">Outfit (Modern Bold)</option>
+              <option value="Space Grotesk">Space Grotesk (Tech)</option>
+              <option value="Syne">Syne (Creative)</option>
+              <option value="Playfair Display">Playfair Display (Elegant Serif)</option>
+              <option value="Inter">Inter (Clean Neutral)</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <div class="slider-header">
+              <label for="titleFontSize">Title Font Size</label>
+              <span class="slider-val" id="val-titleFontSize">48px</span>
+            </div>
+            <input type="range" id="titleFontSize" min="28" max="72" value="48">
+          </div>
+
+          <div class="control-row">
+            <div class="control-group half">
+              <label for="titleFontWeight">Font Weight</label>
+              <select id="titleFontWeight">
+                <option value="400">Regular</option>
+                <option value="600">Semi-Bold</option>
+                <option value="800" selected>Extra-Bold</option>
+              </select>
+            </div>
+            <div class="control-group half">
+              <label for="titleColorMode">Title Color Mode</label>
+              <select id="titleColorMode">
+                <option value="solid">Solid Color</option>
+                <option value="gradient">Gradient Fill</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Title Solid Color -->
+          <div id="title-color-solid-container" class="control-group">
+            <label for="titleColor">Title Color</label>
+            <div class="color-picker-wrapper">
+              <input type="color" id="titleColor" value="#111111">
+            </div>
+          </div>
+
+          <!-- Title Gradient Color -->
+          <div id="title-color-grad-container" style="display:none;">
+            <div class="control-row">
+              <div class="control-group half">
+                <label for="titleColorGrad1">Title Gradient 1</label>
+                <div class="color-picker-wrapper">
+                  <input type="color" id="titleColorGrad1" value="#ff007f">
+                </div>
+              </div>
+              <div class="control-group half">
+                <label for="titleColorGrad2">Title Gradient 2</label>
+                <div class="color-picker-wrapper">
+                  <input type="color" id="titleColorGrad2" value="#7f00ff">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-title">Subtitle Formatting</div>
+
+          <div class="control-group">
+            <label for="subtitleFont">Subtitle Font Family</label>
+            <select id="subtitleFont">
+              <option value="Inter">Inter (Clean)</option>
+              <option value="Outfit">Outfit</option>
+              <option value="Space Grotesk">Space Grotesk</option>
+              <option value="Syne">Syne</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <div class="slider-header">
+              <label for="subtitleFontSize">Subtitle Font Size</label>
+              <span class="slider-val" id="val-subtitleFontSize">20px</span>
+            </div>
+            <input type="range" id="subtitleFontSize" min="14" max="36" value="20">
+          </div>
+
+          <div class="control-row">
+            <div class="control-group half">
+              <label for="subtitleFontWeight">Font Weight</label>
+              <select id="subtitleFontWeight">
+                <option value="300">Light</option>
+                <option value="400" selected>Regular</option>
+                <option value="600">Medium</option>
+              </select>
+            </div>
+            <div class="control-group half">
+              <label for="subtitleColor">Subtitle Color</label>
+              <div class="color-picker-wrapper">
+                <input type="color" id="subtitleColor" value="#444444">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Action Button Group -->
+      <div class="sidebar-actions">
+        <button class="btn-primary" onclick="downloadImage()">
+          <span class="btn-icon">💾</span> Download Screenshot PNG
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- Workspace Preview -->
+    <main class="workspace">
+      
+      <!-- Workspace Toolbar -->
+      <div class="workspace-toolbar">
+        <div class="zoom-controls">
+          <button class="zoom-btn" id="zoomOutBtn" title="Zoom Out">➖</button>
+          <span class="zoom-val" id="zoomVal">80%</span>
+          <button class="zoom-btn" id="zoomInBtn" title="Zoom In">➕</button>
+          <button class="zoom-btn" id="zoomResetBtn" title="Reset Zoom">🔄</button>
+        </div>
+        <div class="toolbar-info">
+          <span>Active Export Scale: 3.0x (1620x2880 px)</span>
+        </div>
+      </div>
+
+      <!-- Canvas Viewport Frame -->
+      <div class="canvas-viewport">
+        
+        <!-- Canvas scale container -->
+        <div id="canvasScaleWrapper">
+          
+          <!-- This is the actual container html2canvas grabs -->
+          <div id="canvas">
+            
+            <img id="customBg" alt="Custom BG Layer">
+            
+            <!-- Grid mesh pattern layer -->
+            <div id="canvasPattern" class="canvas-pattern"></div>
+            
+            <!-- Graphics container for preset shape decors -->
+            <div class="bg-graphics" id="bgGraphics"></div>
+            
+            <!-- Styled visual components container -->
+            <div class="canvas-inner-content" id="canvasInnerContent">
+              
+              <!-- Text Header Component -->
+              <div class="text-component-group" id="textGroup">
+                <div class="title" id="previewTitle">
+                  Get a UPI with credit card
+                </div>
+                <div class="subtitle" id="previewSubtitle">
+                  Fast and secure payments
+                </div>
+              </div>
+
+              <!-- Device Wrapper Component -->
+              <div class="device-wrapper" id="deviceWrapper">
+                
+                <!-- Phone Mockup -->
+                <div class="phone" id="phoneContainer">
+                  
+                  <!-- Camera Bezel -->
+                  <div class="camera" id="phoneCamera"></div>
+                  
+                  <!-- Speaker/Dynamic Island Area (custom styled in css) -->
+                  <div class="dynamic-island"></div>
+                  
+                  <!-- Bezel Highlight Frame -->
+                  <div class="bezel-highlight"></div>
+                  
+                  <!-- Phone Screen Area -->
+                  <div class="screen" id="phoneScreen">
+                    <img id="previewImage" src="https://via.placeholder.com/400x800/dcdde1/2f3542?text=Upload+App+Screenshot" alt="App Preview Screen">
+                  </div>
+                  
+                  <!-- Glass Glare sheen reflection overlay -->
+                  <div class="screen-glare" id="screenGlare"></div>
+                  
+                </div>
+
+              </div>
+              
+            </div>
+
+          </div> <!-- /canvas -->
+          
+        </div> <!-- /canvasScaleWrapper -->
+        
+      </div> <!-- /canvas-viewport -->
+
+    </main>
+
+  </div> <!-- /app-container -->
+
+  <script src="ss.js"></script>
+
+</body>
+</html>
