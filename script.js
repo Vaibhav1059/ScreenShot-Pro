@@ -631,8 +631,7 @@ document.getElementById("zoomOutBtn").addEventListener("click", () => {
 });
 
 document.getElementById("zoomResetBtn").addEventListener("click", () => {
-  state.zoom = 80;
-  applyState();
+  autoFitCanvas();
 });
 
 // --- Screenshots & Background Image Uploaders ---
@@ -712,6 +711,46 @@ function downloadImage() {
   });
 }
 
+// --- Auto-fit Canvas to Viewport ---
+function autoFitCanvas() {
+  const viewport = document.querySelector(".canvas-viewport");
+  if (!viewport) return;
+
+  const padding = 24;
+  const vWidth = viewport.clientWidth - padding;
+  const vHeight = viewport.clientHeight - padding;
+
+  if (vWidth <= 0 || vHeight <= 0) return;
+
+  const cWidth = 540;
+  const cHeight = 960;
+
+  const scaleX = vWidth / cWidth;
+  const scaleY = vHeight / cHeight;
+
+  let scale = Math.min(scaleX, scaleY);
+  
+  // Bound scale between 20% and 150%
+  scale = Math.max(0.2, Math.min(1.5, scale));
+
+  state.zoom = Math.round(scale * 100);
+  
+  const canvasScaleWrapper = document.getElementById("canvasScaleWrapper");
+  if (canvasScaleWrapper) {
+    canvasScaleWrapper.style.transform = `scale(${state.zoom / 100})`;
+  }
+  const zoomVal = document.getElementById("zoomVal");
+  if (zoomVal) {
+    zoomVal.innerText = `${state.zoom}%`;
+  }
+}
+
+// Bind resize listener
+window.addEventListener("resize", autoFitCanvas);
+
 // --- Initial Launch Setup ---
 // Load default "Solar Flare" template
 loadPreset("solar-flare");
+
+// Run auto-fit after loading initial preset
+setTimeout(autoFitCanvas, 100);
