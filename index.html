@@ -22,8 +22,11 @@
         <div class="brand">
           <span class="logo-icon">⚡</span>
           <div>
-            <h1>Screenshot Pro</h1>
-            <span class="version">v2.0 Beta</span>
+            <h1 id="appTitle">Screenshot Vaibhav's Pro</h1>
+            <div class="user-info-row">
+              <span class="version" id="userGreeting">v1.0</span>
+              <button id="editNameBtn" class="edit-name-btn" title="Change Name">✏️</button>
+            </div>
           </div>
         </div>
       </div>
@@ -81,6 +84,10 @@
 
         <!-- Tab: Content -->
         <div class="tab-pane" id="pane-content">
+          <div class="control-group">
+            <label for="appTitleInput">Generator Brand Title</label>
+            <input type="text" id="appTitleInput" value="Vaibhav's Pro">
+          </div>
           <div class="control-group">
             <label for="titleInput">Header Title</label>
             <textarea id="titleInput" rows="2">Get a UPI with credit card</textarea>
@@ -521,6 +528,33 @@
     </main>
 
   </div> <!-- /app-container -->
+
+  <!-- Name Input Modal -->
+  <div id="nameModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-logo">⚡</div>
+      <h2>Welcome to Vaibhav's Generator</h2>
+      <p>Enter your name to personalize your workspace:</p>
+      <input type="text" id="userNameInput" placeholder="Your Name" autofocus>
+      <button id="saveNameBtn" class="modal-btn">Get Started</button>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div id="successModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card success-card">
+      <div class="success-icon">🎉</div>
+      <h2>Export Completed!</h2>
+      <p class="success-subtitle">Generated using <strong id="generatorTitle">Vaibhav's Generator</strong></p>
+      
+      <div class="attribution-box">
+        <p>Created by <strong>Vaibhav</strong></p>
+        <span class="heart">❤️</span>
+      </div>
+      
+      <button id="closeSuccessBtn" class="modal-btn outline">Done</button>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 

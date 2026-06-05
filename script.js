@@ -15,6 +15,7 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
 
 // --- State Management ---
 const state = {
+  appTitle: localStorage.getItem("appTitle") || "Vaibhav's Pro",
   title: "Get a UPI with credit card",
   subtitle: "Fast and secure payments",
   titleFont: "Outfit",
@@ -270,6 +271,7 @@ const presets = {
 
 // --- Inputs Registration Configuration ---
 const inputs = [
+  { id: "appTitleInput", prop: "appTitle", event: "input" },
   { id: "titleInput", prop: "title", event: "input" },
   { id: "subtitleInput", prop: "subtitle", event: "input" },
   
@@ -403,6 +405,21 @@ function updateInputsVisibility() {
 // --- Apply State to Canvas Preview ---
 function applyState() {
   updateInputsVisibility();
+
+  // Update Generator Brand Name
+  const appTitle = document.getElementById("appTitle");
+  if (appTitle) {
+    appTitle.innerText = state.appTitle;
+  }
+  const generatorTitle = document.getElementById("generatorTitle");
+  if (generatorTitle) {
+    generatorTitle.innerText = state.appTitle;
+  }
+  const appTitleInput = document.getElementById("appTitleInput");
+  if (appTitleInput && appTitleInput.value !== state.appTitle) {
+    appTitleInput.value = state.appTitle;
+  }
+  localStorage.setItem("appTitle", state.appTitle);
 
   // 1. Text Component Values
   const previewTitle = document.getElementById("previewTitle");
@@ -689,7 +706,7 @@ function downloadImage() {
   })
   .then(canvas => {
     const link = document.createElement("a");
-    link.download = `screenshot-pro-${Date.now()}.png`;
+    link.download = `${state.appTitle.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.png`;
     link.href = canvas.toDataURL("image/png");
     link.click();
     
@@ -699,6 +716,12 @@ function downloadImage() {
     
     downloadButton.innerHTML = originalText;
     downloadButton.disabled = false;
+
+    // Show success modal
+    setTimeout(() => {
+      const successModal = document.getElementById("successModal");
+      if (successModal) successModal.style.display = "flex";
+    }, 500);
   })
   .catch(err => {
     console.error("Screenshot rendering failed:", err);
@@ -754,3 +777,47 @@ loadPreset("solar-flare");
 
 // Run auto-fit after loading initial preset
 setTimeout(autoFitCanvas, 100);
+
+// --- Name Personalization Modal Logic ---
+document.addEventListener("DOMContentLoaded", () => {
+  const savedName = localStorage.getItem("creatorName");
+  const nameModal = document.getElementById("nameModal");
+  const userGreeting = document.getElementById("userGreeting");
+  
+  if (!savedName) {
+    if (nameModal) nameModal.style.display = "flex";
+  } else {
+    if (userGreeting) userGreeting.innerText = `Hello, ${savedName}!`;
+  }
+});
+
+document.getElementById("saveNameBtn").addEventListener("click", () => {
+  const input = document.getElementById("userNameInput");
+  const name = input.value.trim();
+  if (name) {
+    localStorage.setItem("creatorName", name);
+    const userGreeting = document.getElementById("userGreeting");
+    if (userGreeting) userGreeting.innerText = `Hello, ${name}!`;
+    document.getElementById("nameModal").style.display = "none";
+  }
+});
+
+document.getElementById("userNameInput").addEventListener("keypress", e => {
+  if (e.key === "Enter") {
+    document.getElementById("saveNameBtn").click();
+  }
+});
+
+document.getElementById("editNameBtn").addEventListener("click", () => {
+  const savedName = localStorage.getItem("creatorName") || "";
+  const userNameInput = document.getElementById("userNameInput");
+  if (userNameInput) userNameInput.value = savedName;
+  const nameModal = document.getElementById("nameModal");
+  if (nameModal) nameModal.style.display = "flex";
+});
+
+// Success Modal Close
+document.getElementById("closeSuccessBtn").addEventListener("click", () => {
+  const successModal = document.getElementById("successModal");
+  if (successModal) successModal.style.display = "none";
+});
