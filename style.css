@@ -29,19 +29,25 @@
   -webkit-font-smoothing: antialiased;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+}
+
 body {
   background: var(--bg-app);
   color: var(--text-primary);
-  overflow: hidden;
-  height: 100vh;
-  width: 100vw;
 }
 
 /* Dashboard Shell Layout */
 .app-container {
   display: flex;
-  height: 100vh;
+  height: 100dvh;
   width: 100vw;
+  overflow: hidden;
 }
 
 /* Sidebar Controls */
@@ -938,31 +944,35 @@ input[type="range"]::-webkit-slider-thumb:hover {
 @media (max-width: 768px) {
   .app-container {
     flex-direction: column;
-    height: 100vh;
+    height: 100dvh;
     width: 100vw;
     overflow: hidden;
   }
   
   .workspace {
     width: 100%;
-    height: 45vh;
-    min-height: 280px;
+    height: 40vh;
+    min-height: 250px;
     flex: none;
     order: 1;
     border-bottom: 1px solid var(--border-color);
+    overflow: hidden;
   }
   
   .sidebar {
     width: 100%;
-    height: 55vh;
+    height: 60vh;
     flex: none;
     order: 2;
     border-right: none;
     box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.25);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   
   .canvas-viewport {
     padding: 10px;
+    overflow: hidden;
   }
   
   .workspace-toolbar {
